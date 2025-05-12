@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bankapp.controller.AddClientController"
+      spacing="10" padding="15">
+    <Label text="Добавить клиента" style="-fx-font-size: 16px;" />
+
+    <TextField fx:id="firstNameField" promptText="Имя" />
+    <TextField fx:id="lastNameField" promptText="Фамилия" />
+    <TextField fx:id="passportSeriesField" promptText="Серия паспорта" />
+    <TextField fx:id="passportNumberField" promptText="Номер паспорта" />
+
+    <Button text="Сохранить" onAction="#onSave" />
+</VBox>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bankapp.controller.LoanController" prefWidth="400" prefHeight="250">
+    <children>
+        <ComboBox fx:id="clientCombo" layoutX="20" layoutY="20" prefWidth="150" promptText="Клиент"/>
+        <ImageView fx:id="photoView" layoutX="200" layoutY="10" fitWidth="100" fitHeight="100"/>
+
+        <ComboBox fx:id="currencyCombo" layoutX="20" layoutY="80" prefWidth="150" promptText="Валюта"/>
+        <TextField fx:id="amountField" layoutX="20" layoutY="120" prefWidth="150" promptText="Сумма"/>
+        <DatePicker fx:id="dueDatePicker" layoutX="20" layoutY="160"/>
+
+        <Button text="Выдать" onAction="#onIssueLoan" layoutX="20" layoutY="200"/>
+<!--        <Button text="Добавить клиента" onAction="#openAddClientWindow" />-->
+        <Button text="Валюты" onAction="#openCurrencyWindow" layoutX="100" layoutY="200"/>
+    </children>
+</AnchorPane>
