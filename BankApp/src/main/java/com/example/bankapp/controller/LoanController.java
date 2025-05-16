@@ -7,47 +7,69 @@ import com.example.bankapp.dao.LoanDAO;
 import com.example.bankapp.model.Client;
 import com.example.bankapp.model.Currency;
 import com.example.bankapp.model.Loan;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.File;
+import javafx.util.StringConverter;
 
 
 public class LoanController {
     @FXML private ComboBox<Client> clientCombo;
-    @FXML private ImageView photoView;
     @FXML private ComboBox<Currency> currencyCombo;
     @FXML private TextField amountField;
     @FXML private DatePicker dueDatePicker;
 
     @FXML public void initialize() {
-        try {
-            clientCombo.setItems(FXCollections.observableArrayList(ClientDAO.findAll()));
-            updateCurrencyCombo();
+        // Загружаем всех клиентов в ComboBox
+        clientCombo.setItems(FXCollections.observableArrayList(ClientDAO.findAll()));
 
-            clientCombo.setOnAction(e -> {
-                Client c = clientCombo.getValue();
-                if (c != null && c.getPhotoPath() != null) {
-                    try {
-                        Image img = new Image(new File(c.getPhotoPath()).toURI().toString());
-                        photoView.setImage(img);
-                    } catch (Exception ex) {
-                        showError("Ошибка загрузки изображения: " + ex.getMessage());
-                    }
+        // Делаем ComboBox редактируемым
+        clientCombo.setEditable(true);
+
+        // Устанавливаем StringConverter: как отображать Client и как искать по строке
+        clientCombo.setConverter(new StringConverter<Client>() {
+            @Override
+            public String toString(Client client) {
+                return client != null
+                        ? client.getPassportSeries() + " " + client.getPassportNumber()
+                        + " — " + client.getFirstName() + " " + client.getLastName()
+                        : "";
+            }
+
+            @Override
+            public Client fromString(String input) {
+                if (input == null || input.isBlank()) return null;
+                // Ожидаем формат "SERIES NUMBER" (например "1234 567890")
+                String[] parts = input.trim().split("\\s+");
+                if (parts.length < 2) return null;
+                String series = parts[0];
+                String number = parts[1];
+                return ClientDAO.findByPassport(series, number);
+            }
+        });
+
+        // При потере фокуса или нажатии Enter — автоматически подтягиваем полное значение
+        Platform.runLater(() -> {
+            clientCombo.getEditor().setOnAction(evt -> {
+                Client c = clientCombo.getConverter().fromString(clientCombo.getEditor().getText());
+                if (c != null) {
+                    clientCombo.setValue(c);
+                } else {
+                    showError("Клиент с такими паспортными данными не найден.");
                 }
             });
-        } catch (Exception e) {
-            showError("Ошибка инициализации: " + e.getMessage());
-        }
+        });
+
+        // Остальная инициализация валют и окон...
+        updateCurrencyCombo();
     }
+
 
     @FXML
     private void openAddClientWindow() {

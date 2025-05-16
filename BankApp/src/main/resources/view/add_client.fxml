@@ -2,14 +2,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.bankapp.controller.AddClientController"
-      spacing="10" padding="15">
-    <Label text="Добавить клиента" style="-fx-font-size: 16px;" />
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bankapp.controller.AddClientController"
+            prefWidth="400" prefHeight="240">
+    <Label text="ФИО" layoutX="20" layoutY="10"/>
+    <TextField fx:id="fullNameField" promptText="Фамилия Имя Отчество" layoutX="20" layoutY="30" prefWidth="360"/>
 
-    <TextField fx:id="firstNameField" promptText="Имя" />
-    <TextField fx:id="lastNameField" promptText="Фамилия" />
-    <TextField fx:id="passportSeriesField" promptText="Серия паспорта" />
-    <TextField fx:id="passportNumberField" promptText="Номер паспорта" />
+    <Label text="Серия паспорта" layoutX="20" layoutY="70"/>
+    <TextField fx:id="passportSeriesField" promptText="Серия" layoutX="20" layoutY="90"/>
 
-    <Button text="Сохранить" onAction="#onSave" />
-</VBox>
+    <Label text="Номер паспорта" layoutX="200" layoutY="70"/>
+    <TextField fx:id="passportNumberField" promptText="Номер" layoutX="200" layoutY="90"/>
+
+    <Label text="Дата выдачи паспорта" layoutX="20" layoutY="120"/>
+    <DatePicker fx:id="passportIssuedDatePicker" layoutX="20" layoutY="140"/>
+
+    <Label text="Кем выдан паспорт" layoutX="200" layoutY="120"/>
+    <TextField fx:id="passportIssuedByField" promptText="Орган выдачи" layoutX="200" layoutY="140"/>
+
+    <Button text="Сохранить" onAction="#onSave" layoutX="20" layoutY="180"/>
+</AnchorPane>
