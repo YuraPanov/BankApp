@@ -1,5 +1,4 @@
 package com.example.bankapp.model;
-
 public class Client {
     private int clientId;
     private String firstName;
