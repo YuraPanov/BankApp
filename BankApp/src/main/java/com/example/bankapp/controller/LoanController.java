@@ -1,6 +1,9 @@
 package com.example.bankapp.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import com.example.bankapp.dao.ClientDAO;
 import com.example.bankapp.dao.CurrencyDAO;
 import com.example.bankapp.dao.LoanDAO;
@@ -20,10 +23,12 @@ import javafx.util.StringConverter;
 
 
 public class LoanController {
+
     @FXML private ComboBox<Client> clientCombo;
     @FXML private ComboBox<Currency> currencyCombo;
     @FXML private TextField amountField;
     @FXML private DatePicker dueDatePicker;
+    @FXML private TextField interestRate;
 
     @FXML public void initialize() {
         // Загружаем всех клиентов в ComboBox
@@ -120,6 +125,19 @@ public class LoanController {
                 return;
             }
 
+            String interestText = interestRate.getText();
+            if (interestText.isEmpty()) {
+                showError("Введите ставку кредита");
+                return;
+            }
+
+            try {
+                loan.setInterestRate(Float.parseFloat(interestText));
+            } catch (NumberFormatException e) {
+                showError("Некорректная ставка кредита. Пожалуйста, введите число.");
+                return;
+            }
+
             LocalDate dueDate = dueDatePicker.getValue();
             if (dueDate == null) {
                 showError("Выберите дату погашения.");
@@ -130,7 +148,23 @@ public class LoanController {
                 return;
             }
 
-            loan.setDueDate(java.sql.Date.valueOf(dueDate));
+            long months = ChronoUnit.MONTHS.between(LocalDate.now(), dueDate);
+            if (months <= 0) {
+                showError("Срок кредита должен быть больше 0 месяцев.");
+                return;
+            }
+            double annualRate = Double.parseDouble(interestText);
+
+            // Расчёт ежемесячного платежа
+            double monthlyPayment = calculateMonthlyPayment(loan.getPrincipalAmount(), annualRate, (int) months);
+            loan.setMonthlyPayment(monthlyPayment);
+            // Устанавливаем сумму к возврату
+            loan.setAmountDue(monthlyPayment * months);
+
+            loan.setDueDate(Date.valueOf(dueDate));
+
+            // Устанавливаем дату оформления кредита
+            loan.setLoanDate(Date.valueOf(LocalDate.now()));
             LoanDAO.save(loan);
             new Alert(Alert.AlertType.INFORMATION, "Кредит выдан!").showAndWait();
         } catch (Exception e) {
@@ -154,6 +188,12 @@ public class LoanController {
         } catch (Exception e) {
             showError("Ошибка открытия окна управления валютами: " + e.getMessage());
         }
+    }
+
+    private double calculateMonthlyPayment(double principal, double annualRate, int months) {
+        double monthlyRate = annualRate / 100 / 12;
+        return principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
+                (Math.pow(1 + monthlyRate, months) - 1);
     }
 
     private void updateCurrencyCombo() {

@@ -47,7 +47,36 @@ public class ClientDAO {
             e.printStackTrace();
         }
     }
+    public static void update(Client cl) {
+        String sql = "UPDATE clients SET first_name=?, last_name=?, middle_name=?, "
+                + "passport_series=?, passport_number=?, passport_issued_date=?, passport_issued_by=? "
+                + "WHERE client_id=?";
+        try (Connection c = DBUtil.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, cl.getFirstName());
+            ps.setString(2, cl.getLastName());
+            ps.setString(3, cl.getMiddleName());
+            ps.setString(4, cl.getPassportSeries());
+            ps.setString(5, cl.getPassportNumber());
+            ps.setString(6, cl.getPassportIssuedDate());
+            ps.setString(7, cl.getPassportIssuedBy());
+            ps.setInt   (8, cl.getClientId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void delete(int clientId) {
+        String sql = "DELETE FROM clients WHERE client_id=?";
+        try (Connection c = DBUtil.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, clientId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static Client findByPassport(String series, String number) {
         String sql = "SELECT client_id, first_name, last_name, middle_name, passport_series, " +
                 "passport_number, passport_issued_date, passport_issued_by " +

@@ -2,23 +2,64 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bankapp.controller.AddClientController"
-            prefWidth="400" prefHeight="240">
-    <Label text="ФИО" layoutX="20" layoutY="10"/>
-    <TextField fx:id="fullNameField" promptText="Фамилия Имя Отчество" layoutX="20" layoutY="30" prefWidth="360"/>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bankapp.controller.ClientsController"
+            prefWidth="800" prefHeight="500">
 
-    <Label text="Серия паспорта" layoutX="20" layoutY="70"/>
-    <TextField fx:id="passportSeriesField" promptText="Серия" layoutX="20" layoutY="90"/>
+    <!-- Таблица клиентов -->
+    <TableView fx:id="table" layoutX="20" layoutY="20" prefWidth="760" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="colId"        text="ID"            prefWidth="50"/>
+            <TableColumn fx:id="colLastName"  text="Фамилия"      prefWidth="120"/>
+            <TableColumn fx:id="colFirstName" text="Имя"           prefWidth="120"/>
+            <TableColumn fx:id="colMiddleName" text="Отчество"     prefWidth="120"/>
+            <TableColumn fx:id="colSeries"    text="Серия"        prefWidth="80"/>
+            <TableColumn fx:id="colNumber"    text="Номер"        prefWidth="80"/>
+            <TableColumn fx:id="colDate"      text="Дата выдачи"  prefWidth="120"/>
+            <TableColumn fx:id="colBy"        text="Кем выдан"    prefWidth="150"/>
+        </columns>
+    </TableView>
 
-    <Label text="Номер паспорта" layoutX="200" layoutY="70"/>
-    <TextField fx:id="passportNumberField" promptText="Номер" layoutX="200" layoutY="90"/>
+    <!-- Форма редактирования/добавления -->
+    <GridPane layoutX="20" layoutY="340" hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="15"/>
+            <ColumnConstraints percentWidth="35"/>
+            <ColumnConstraints percentWidth="15"/>
+            <ColumnConstraints percentWidth="35"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="25"/>
+            <RowConstraints percentHeight="25"/>
+            <RowConstraints percentHeight="25"/>
+            <RowConstraints percentHeight="25"/>
+        </rowConstraints>
 
-    <Label text="Дата выдачи паспорта" layoutX="20" layoutY="120"/>
-    <DatePicker fx:id="passportIssuedDatePicker" layoutX="20" layoutY="140"/>
+        <Label text="ФИО:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="fullNameField" promptText="Фамилия Имя Отчество"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
 
-    <Label text="Кем выдан паспорт" layoutX="200" layoutY="120"/>
-    <TextField fx:id="passportIssuedByField" promptText="Орган выдачи" layoutX="200" layoutY="140"/>
+        <Label text="Серия:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="seriesField" promptText="0000"
+                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Номер:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <TextField fx:id="numberField" promptText="000000"
+                   GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
-    <Button text="Сохранить" onAction="#onSave" layoutX="20" layoutY="180"/>
+        <Label text="Дата выдачи:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Кем выдан:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <TextField fx:id="issuedByField" promptText="Орган выдачи"
+                   GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+        <!-- Кнопки -->
+        <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4">
+            <Button text="Добавить" onAction="#onAdd"/>
+            <Button text="Сохранить" onAction="#onUpdate"/>
+            <Button text="Удалить"   onAction="#onDelete"/>
+            <Button text="Обновить"  onAction="#loadData"/>
+        </HBox>
+    </GridPane>
+
 </AnchorPane>

@@ -6,6 +6,7 @@
     <ComboBox fx:id="clientCombo" layoutX="20" layoutY="20" prefWidth="250" promptText="Клиент"/>
     <ComboBox fx:id="currencyCombo" layoutX="20" layoutY="80" prefWidth="150" promptText="Валюта"/>
     <TextField fx:id="amountField" layoutX="20" layoutY="120" prefWidth="150" promptText="Сумма"/>
+    <TextField fx:id="interestRate" layoutX="200" layoutY="120" prefWidth="60" promptText="20%"/>
     <DatePicker fx:id="dueDatePicker" layoutX="20" layoutY="160" prefWidth="150"/>
     <Button text="Выдать" onAction="#onIssueLoan" layoutX="20" layoutY="200"/>
     <Button text="Добавить клиента" onAction="#openAddClientWindow" layoutX="250" layoutY="200"/>
