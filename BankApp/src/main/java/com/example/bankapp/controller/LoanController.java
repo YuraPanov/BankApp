@@ -38,7 +38,7 @@ public class LoanController {
         clientCombo.setEditable(true);
 
         // Устанавливаем StringConverter: как отображать Client и как искать по строке
-        clientCombo.setConverter(new StringConverter<Client>() {
+        clientCombo.setConverter(new StringConverter<>() {
             @Override
             public String toString(Client client) {
                 return client != null
@@ -170,6 +170,11 @@ public class LoanController {
         } catch (Exception e) {
             showError("Ошибка при выдаче кредита: " + e.getMessage());
         }
+        // Очистка формы
+        currencyCombo.getSelectionModel().clearSelection();
+        amountField.clear();
+        interestRate.clear();
+        dueDatePicker.setValue(null);
     }
 
     @FXML private void openCurrencyWindow() {
@@ -190,6 +195,21 @@ public class LoanController {
         }
     }
 
+    @FXML
+    private void openLoansWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loans.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Список займов");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            showError("Ошибка открытия окна займов: " + e.getMessage());
+        }
+    }
+
     private double calculateMonthlyPayment(double principal, double annualRate, int months) {
         double monthlyRate = annualRate / 100 / 12;
         return principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) /
@@ -197,6 +217,7 @@ public class LoanController {
     }
 
     private void updateCurrencyCombo() {
+        // Загружаем и обновляем все валюты в ComboBox
         currencyCombo.setItems(FXCollections.observableArrayList(CurrencyDAO.findAll()));
     }
 
@@ -206,5 +227,16 @@ public class LoanController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void run() {
+        clientCombo.getEditor().setOnAction(evt -> {
+            Client c = clientCombo.getConverter().fromString(clientCombo.getEditor().getText());
+            if (c != null) {
+                clientCombo.setValue(c);
+            } else {
+                showError("Клиент с такими паспортными данными не найден.");
+            }
+        });
     }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.bankapp.controller.LoansController"
+            prefWidth="1120" prefHeight="580">
+
+    <!-- HBox для поиска по ID клиента -->
+    <HBox layoutX="10" layoutY="10" spacing="8">
+        <Label text="Искать по ID Клиента:" />
+        <TextField fx:id="searchClientIdField" promptText="Введите ID клиента" prefWidth="120"/>
+        <Button text="Найти" onAction="#onSearchByClientId"/>
+    </HBox>
+
+    <!-- Таблица займов -->
+    <TableView fx:id="table" layoutX="20" layoutY="50" prefWidth="1080" prefHeight="500"
+               editable="true">
+        <columns>
+            <TableColumn fx:id="colLoanId"       text="№"             prefWidth="50"/>
+            <TableColumn fx:id="colClientId"     text="Client ID"     prefWidth="60"/>
+            <TableColumn fx:id="colCurrency"     text="Currency"      prefWidth="60"/>
+            <TableColumn fx:id="colPrincipal"    text="Сумма кредита" prefWidth="100"/>
+            <TableColumn fx:id="colLoanDate"     text="Дата выдачи"   prefWidth="100"/>
+            <TableColumn fx:id="colDueDate"      text="Дата погашения" prefWidth="100"/>
+            <TableColumn fx:id="colInterest"     text="Ставка (%)"    prefWidth="80"/>
+            <TableColumn fx:id="colAmountDue"    text="К возврату"    prefWidth="100"/>
+            <TableColumn fx:id="colActualReturn" text="Дата возврата" prefWidth="100"/>
+            <TableColumn fx:id="colPenalty"      text="Штраф"         prefWidth="80"/>
+            <TableColumn fx:id="colMonthlyPayment" text="Мес. платёж" prefWidth="90"/>
+            <TableColumn fx:id="colStatus"       text="Статус"        prefWidth="80"/>
+            <TableColumn fx:id="colAction"       text="Действие"      prefWidth="80"/>
+        </columns>
+    </TableView>
+</AnchorPane>

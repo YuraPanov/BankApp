@@ -7,14 +7,14 @@ public class Loan {
     private int clientId;
     private String currencyCode;
     private double principalAmount;
-    private Date dueDate;
     private Date loanDate;
-    private float interestRate;
+    private Date dueDate;
+    private double interestRate;
     private double amountDue;
-    private int penaltyAmount;
     private Date actualReturnDate;
     private double monthlyPayment;
-//    private int loanStatus;
+    private double penaltyAmount;
+    private String loanStatus;
 
     // getters and setters
     public int getLoanId() { return loanId; }
@@ -35,8 +35,8 @@ public class Loan {
     public Date getLoanDate() { return loanDate; }
     public void setLoanDate(Date loanDate) { this.loanDate = loanDate; }
 
-    public float getInterestRate() { return interestRate; }
-    public void setInterestRate(float interestRate) { this.interestRate = interestRate; }
+    public double getInterestRate() { return interestRate; }
+    public void setInterestRate(double interestRate) { this.interestRate = interestRate; }
 
     public Double getAmountDue() { return amountDue; }
     public void setAmountDue(double amountDue) { this.amountDue = amountDue; }
@@ -44,13 +44,31 @@ public class Loan {
     public Date getActualReturnDate() { return actualReturnDate; }
     public void setActualReturnDate(Date actualReturnDate) { this.actualReturnDate = actualReturnDate; }
 
-    public int getPenaltyAmount() { return penaltyAmount; }
-    public void setPenaltyAmount(int penaltyAmount) { this.penaltyAmount = penaltyAmount; }
+    public double getPenaltyAmount() { return penaltyAmount; }
+    public void setPenaltyAmount(double penaltyAmount) { this.penaltyAmount = penaltyAmount; }
 
     public Double getMonthlyPayment() { return monthlyPayment; }
     public void setMonthlyPayment(double monthlyPayment) { this.monthlyPayment = monthlyPayment; }
 
-//    public int getLoanStatus() { return loanStatus; }
-//    public void setLoanStatus(int loanStatus) { this.loanStatus = loanStatus; }
+    public String getLoanStatus() { return loanStatus; }
+    public void setLoanStatus(String loanStatus) { this.loanStatus = loanStatus; }
 
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "loanId=" + loanId +
+                ", clientId=" + clientId +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", principalAmount=" + principalAmount +
+                ", loanDate=" + loanDate +
+                ", dueDate=" + dueDate +
+                ", interestRate=" + interestRate +
+                ", amountDue=" + amountDue +
+                ", penaltyAmount=" + penaltyAmount +
+                ", actualReturnDate=" + actualReturnDate +
+                ", loanStatus='" + loanStatus + '\'' +
+                ", monthlyPayment=" + monthlyPayment +
+                '}';
+    }
 }

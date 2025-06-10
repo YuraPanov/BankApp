@@ -90,10 +90,6 @@ public class CurrencyController {
         });
     }
 
-//    public void setOnCurrencyUpdated(Runnable callback) {
-//        this.currencyUpdatedCallback = callback;
-//    }
-
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");

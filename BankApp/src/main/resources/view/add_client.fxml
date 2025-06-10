@@ -10,55 +10,56 @@
     <!-- Таблица клиентов -->
     <TableView fx:id="table" layoutX="20" layoutY="20" prefWidth="760" prefHeight="300">
         <columns>
-            <TableColumn fx:id="colId"        text="ID"            prefWidth="50"/>
-            <TableColumn fx:id="colLastName"  text="Фамилия"      prefWidth="120"/>
-            <TableColumn fx:id="colFirstName" text="Имя"           prefWidth="120"/>
-            <TableColumn fx:id="colMiddleName" text="Отчество"     prefWidth="120"/>
-            <TableColumn fx:id="colSeries"    text="Серия"        prefWidth="80"/>
-            <TableColumn fx:id="colNumber"    text="Номер"        prefWidth="80"/>
-            <TableColumn fx:id="colDate"      text="Дата выдачи"  prefWidth="120"/>
-            <TableColumn fx:id="colBy"        text="Кем выдан"    prefWidth="150"/>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colLastName" text="Фамилия" prefWidth="120"/>
+            <TableColumn fx:id="colFirstName" text="Имя" prefWidth="120"/>
+            <TableColumn fx:id="colMiddleName" text="Отчество" prefWidth="120"/>
+            <TableColumn fx:id="colSeries" text="Серия" prefWidth="80"/>
+            <TableColumn fx:id="colNumber" text="Номер" prefWidth="80"/>
+            <TableColumn fx:id="colDate" text="Дата выдачи" prefWidth="120"/>
+            <TableColumn fx:id="colBy" text="Кем выдан" prefWidth="150"/>
+<!--            <TableColumn fx:id="colTelephone" text="Телефон" prefWidth="150"/>-->
         </columns>
     </TableView>
 
     <!-- Форма редактирования/добавления -->
-    <GridPane layoutX="20" layoutY="340" hgap="10" vgap="10">
+    <GridPane layoutX="20" layoutY="340" prefWidth="760" hgap="10" vgap="10">
         <columnConstraints>
             <ColumnConstraints percentWidth="15"/>
             <ColumnConstraints percentWidth="35"/>
             <ColumnConstraints percentWidth="15"/>
             <ColumnConstraints percentWidth="35"/>
         </columnConstraints>
-        <rowConstraints>
-            <RowConstraints percentHeight="25"/>
-            <RowConstraints percentHeight="25"/>
-            <RowConstraints percentHeight="25"/>
-            <RowConstraints percentHeight="25"/>
-        </rowConstraints>
 
         <Label text="ФИО:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextField fx:id="fullNameField" promptText="Фамилия Имя Отчество"
-                   GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
+                   GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
+
+<!--        <Label text="Телефон:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>-->
+<!--        <TextField fx:id="telephoneField" promptText="+7..."-->
+<!--                   GridPane.columnIndex="3" GridPane.rowIndex="0"/>-->
 
         <Label text="Серия:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
         <TextField fx:id="seriesField" promptText="0000"
                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
         <Label text="Номер:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
         <TextField fx:id="numberField" promptText="000000"
                    GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
         <Label text="Дата выдачи:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
         <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
         <Label text="Кем выдан:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
         <TextField fx:id="issuedByField" promptText="Орган выдачи"
                    GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
-        <!-- Кнопки -->
-        <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4">
+        <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="4"
+              alignment="CENTER">
             <Button text="Добавить" onAction="#onAdd"/>
             <Button text="Сохранить" onAction="#onUpdate"/>
-            <Button text="Удалить"   onAction="#onDelete"/>
-            <Button text="Обновить"  onAction="#loadData"/>
+            <Button text="Удалить" onAction="#onDelete"/>
+            <Button text="Обновить" onAction="#loadData"/>
         </HBox>
     </GridPane>
 

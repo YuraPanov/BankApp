@@ -7,6 +7,7 @@ public class ConversionRate {
     // getters and setters
     public String getCode() { return code; }
     public void setCode(String code) { this.code = code; }
+
     public int getPricePerRub() { return pricePerRub; }
     public void setPricePerRub(int pricePerRub) { this.pricePerRub = pricePerRub; }
 }

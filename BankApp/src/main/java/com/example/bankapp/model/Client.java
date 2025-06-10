@@ -8,6 +8,7 @@ public class Client {
     private String passportNumber;
     private String passportIssuedDate;
     private String passportIssuedBy;
+    private String telephoneNumber;
 
     // Getters and setters
     public int getClientId() { return clientId; }
@@ -33,6 +34,9 @@ public class Client {
 
     public String getPassportIssuedBy() { return passportIssuedBy; }
     public void setPassportIssuedBy(String passportIssuedBy) { this.passportIssuedBy = passportIssuedBy; }
+
+//    public String getTelephoneNumber() { return telephoneNumber; }
+//    public void setTelephoneNumber(String telephoneNumber) { this.telephoneNumber = telephoneNumber; }
 
     @Override
     public String toString() { return firstName + " " + lastName; }

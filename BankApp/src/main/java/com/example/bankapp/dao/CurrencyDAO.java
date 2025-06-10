@@ -69,6 +69,7 @@ public class CurrencyDAO {
             }
         }
     }
+
     public static void update(Currency currency) {
         String updateRateSQL = "UPDATE conversion_rate SET price_perRub = ? WHERE code = ?";
 

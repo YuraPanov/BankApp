@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class ClientsController {
 
+
     @FXML private TableView<Client> table;
     @FXML private TableColumn<Client, Integer> colId;
     @FXML private TableColumn<Client, String> colLastName;
@@ -24,12 +25,14 @@ public class ClientsController {
     @FXML private TableColumn<Client, String> colNumber;
     @FXML private TableColumn<Client, String> colDate;
     @FXML private TableColumn<Client, String> colBy;
+//    @FXML private TableColumn<Client, String> colTelephone;
 
     @FXML private TextField fullNameField;
     @FXML private TextField seriesField;
     @FXML private TextField numberField;
     @FXML private DatePicker datePicker;
     @FXML private TextField issuedByField;
+//    @FXML private TextField telephoneField;
 
     private final ObservableList<Client> data = FXCollections.observableArrayList();
     private Client selectedClient = null;
@@ -45,6 +48,7 @@ public class ClientsController {
         colNumber.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getPassportNumber()));
         colDate.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getPassportIssuedDate()));
         colBy.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getPassportIssuedBy()));
+//        colTelephone.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getTelephoneNumber()));
 
         table.setItems(data);
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -> {
@@ -113,6 +117,14 @@ public class ClientsController {
             showWarning("Выберите клиента для удаления");
             return;
         }
+
+        // Проверим, есть ли у клиента займы
+        boolean hasLoans = ClientDAO.hasLoans(selectedClient.getClientId());
+        if (hasLoans) {
+            showWarning("Невозможно удалить клиента: у него есть связанные займы");
+            return;
+        }
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
                 "Удалить клиента " + selectedClient.getLastName() + "?",
                 ButtonType.YES, ButtonType.NO);
@@ -129,6 +141,7 @@ public class ClientsController {
         String number   = numberField.getText().trim();
         LocalDate date  = datePicker.getValue();
         String by       = issuedByField.getText().trim();
+//        String telephone = telephoneField.getText().trim();
 
         if (fullName.isEmpty() || series.isEmpty() || number.isEmpty() || date == null || by.isEmpty()) {
             throw new IllegalArgumentException("Заполните все поля");
@@ -139,6 +152,9 @@ public class ClientsController {
         if (!number.matches("\\d{6}")) {
             throw new IllegalArgumentException("Номер — 6 цифр");
         }
+//        if (!number.matches("\\d{12}")) {
+//            throw new IllegalArgumentException("Номер — 12 цифр c учётом +7");
+//        }
         String[] parts = fullName.split("\\s+");
         if (parts.length < 2) {
             throw new IllegalArgumentException("Укажите минимум фамилию и имя");

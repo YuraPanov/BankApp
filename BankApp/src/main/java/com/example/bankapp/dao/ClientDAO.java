@@ -42,11 +42,13 @@ public class ClientDAO {
             ps.setString(5, cl.getPassportNumber());
             ps.setString(6, cl.getPassportIssuedDate());
             ps.setString(7, cl.getPassportIssuedBy());
+//            ps.setString(8, cl.getTelephoneNumber());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public static void update(Client cl) {
         String sql = "UPDATE clients SET first_name=?, last_name=?, middle_name=?, "
                 + "passport_series=?, passport_number=?, passport_issued_date=?, passport_issued_by=? "
@@ -77,6 +79,22 @@ public class ClientDAO {
             e.printStackTrace();
         }
     }
+
+    public static boolean hasLoans(int clientId) {
+        String sql = "SELECT COUNT(*) FROM loans WHERE client_id = ?";
+        try (Connection c = DBUtil.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, clientId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static Client findByPassport(String series, String number) {
         String sql = "SELECT client_id, first_name, last_name, middle_name, passport_series, " +
                 "passport_number, passport_issued_date, passport_issued_by " +

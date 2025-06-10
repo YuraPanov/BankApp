@@ -9,6 +9,7 @@
     <TextField fx:id="interestRate" layoutX="200" layoutY="120" prefWidth="60" promptText="20%"/>
     <DatePicker fx:id="dueDatePicker" layoutX="20" layoutY="160" prefWidth="150"/>
     <Button text="Выдать" onAction="#onIssueLoan" layoutX="20" layoutY="200"/>
-    <Button text="Добавить клиента" onAction="#openAddClientWindow" layoutX="250" layoutY="200"/>
-    <Button text="Валюты" onAction="#openCurrencyWindow" layoutX="180" layoutY="200"/>
+    <Button text="Добавить клиента" onAction="#openAddClientWindow" layoutX="185" layoutY="200"/>
+    <Button text="Валюты" onAction="#openCurrencyWindow" layoutX="115" layoutY="200"/>
+    <Button text="Кредиты" onAction="#openLoansWindow" layoutX="310" layoutY="200"/>
 </AnchorPane>
